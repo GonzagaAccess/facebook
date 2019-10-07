@@ -7,6 +7,7 @@ yarn-error.log*
 
 *.crt
 *.key
+*.pem
 
 # Runtime data
 pids
