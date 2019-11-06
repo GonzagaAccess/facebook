@@ -38,4 +38,6 @@ fastify.get('/login/facebook/callback', async function (request, reply) {
   reply.send({ access_token: token.access_token })
 })
 
-fastify.listen(3000)
+fastify.listen(3000, err => {
+  if (err) throw err
+})
