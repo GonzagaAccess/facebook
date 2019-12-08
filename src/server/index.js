@@ -10,7 +10,6 @@ const fastify = require('fastify')({
     cert: fs.readFileSync(path.join(__dirname, 'localhost.pem'))
   }
 })
-
 const oauthPlugin = require('fastify-oauth2')
 
 fastify.register(oauthPlugin, {
@@ -22,19 +21,12 @@ fastify.register(oauthPlugin, {
     },
     auth: oauthPlugin.FACEBOOK_CONFIGURATION
   },
-  // register a fastify url to start the redirect flow
   startRedirectPath: '/login/facebook',
-  // facebook redirect here after the user login
   callbackUri: 'https://localhost:3000/login/facebook/callback'
 })
 
 fastify.get('/login/facebook/callback', async function (request, reply) {
   const token = await this.getAccessTokenFromAuthorizationCodeFlow(request)
-
-  console.log(token.access_token)
-  // if later you need to refresh the token you can use
-  // const newToken = await this.getNewAccessTokenUsingRefreshToken(token.refresh_token)
-
   reply.send({ access_token: token.access_token })
 })
 
